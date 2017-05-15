@@ -5,9 +5,7 @@ class PagesController < ApplicationController
     @start_time = Time.now
   end
 
-  def generate_grid(grid_size)
-    Array.new(grid_size) { ('A'..'Z').to_a[rand(26)] }
-  end
+
 
   def score
     @end_time = Time.now
@@ -15,9 +13,20 @@ class PagesController < ApplicationController
     @grid = params[:grid]
     @attempt = params[:attempt]
     @result = run_game(@attempt, @grid, @start_time, @end_time)
+    @session = (session[:scores] << @result[:score])
+  end
+
+  def welcome
+    session[:scores] = []
   end
 
   private
+
+
+
+  def generate_grid(grid_size)
+    Array.new(grid_size) { ('A'..'Z').to_a[rand(26)] }
+  end
 
   def run_game(attempt, grid, start_time, end_time)
     result = { time: end_time - start_time }
@@ -65,4 +74,5 @@ class PagesController < ApplicationController
         return nil
       end
   end
+
 end

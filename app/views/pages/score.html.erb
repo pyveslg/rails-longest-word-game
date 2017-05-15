@@ -1,7 +1,33 @@
 <h1>Your result</h1>
 
 <h3>Your word : <%= @attempt %></h3>
-<h3>Time taken to answer : <%= @result[:time] %></h3>
+<h3>Time taken to answer : <%= @result[:time].round() %></h3>
 <h3>Translation : <%= @result[:translation] %></h3>
-<h3>Your score : <%= @result[:score] %></h3>
+<h3>Your score : <%= @result[:score].round(1) %></h3>
 <h3>Message: <%= @result[:message] %></h3>
+
+<%= link_to "new game", start_path  %>
+<%= link_to "reinitialize session", root_path %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
+      <table id="table" class="text-center">
+        <thead>
+          <th><h4>Number of games</h4></th>
+          <th><h4>Total scores</h4></th>
+          <th><h4>Average score</h4></th>
+        </thead>
+        <tbody>
+          <tr>
+            <td><h5><%= @session.length %></h5></td>
+            <td><h5><%= @session.inject(:+).round(1) %></h5></td>
+            <td><h5><%= (@session.inject(:+) / @session.length).round(1) %></h5></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
